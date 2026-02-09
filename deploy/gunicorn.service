@@ -1,0 +1,19 @@
+# Template systemd unit for Gunicorn
+# Copy to /etc/systemd/system/gunicorn.service and edit the placeholders.
+# Replace <USER>, <GROUP>, <APP_DIR>, <GUNICORN_BIN> before enabling.
+
+[Unit]
+Description=gunicorn daemon for DivinG_BAZ
+After=network.target
+
+[Service]
+User=<USER>
+Group=<GROUP>
+WorkingDirectory=<APP_DIR>
+Environment=PATH=<GUNICORN_BIN_PATH>:/usr/bin
+Environment=PYTHONUNBUFFERED=1
+ExecStart=<GUNICORN_BIN> --workers 3 --bind 127.0.0.1:8000 app:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
